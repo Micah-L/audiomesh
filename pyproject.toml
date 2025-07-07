@@ -16,6 +16,7 @@ tabulate = "^0.9"
 
 [tool.poetry.scripts]
 discovery = "audiomesh.cli:discovery"
+# expose the audio_core command group as a script
 audio-core = "audiomesh.cli:audio_core"
 api = "audiomesh.cli:api"
 

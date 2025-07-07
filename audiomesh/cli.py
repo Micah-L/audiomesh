@@ -216,14 +216,14 @@ def stop(pid_file: Path) -> None:
 
 @click.group()
 def audio_core() -> None:
-    """Manage JACK streams via jacktrip."""
+    """Commands for managing jacktrip network streams."""
 
 
 @audio_core.command(name="start")
 @click.argument("peer_ip")
 @click.argument("client_name")
 def start_session(peer_ip: str, client_name: str) -> None:
-    """Launch a jacktrip session."""
+    """Launch a jacktrip session and print its PID."""
     try:
         pid = start_stream(peer_ip, client_name)
     except JackError as exc:
@@ -235,7 +235,7 @@ def start_session(peer_ip: str, client_name: str) -> None:
 @audio_core.command(name="stop")
 @click.argument("pid", type=int)
 def stop_session(pid: int) -> None:
-    """Terminate a jacktrip session."""
+    """Terminate a running jacktrip session."""
     try:
         stop_stream(pid)
     except JackError as exc:
