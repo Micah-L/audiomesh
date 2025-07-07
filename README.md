@@ -1,6 +1,6 @@
-# AudioMesh
+# audiomesh
 
-AudioMesh is a lightweight, LAN-based audio distribution framework for Linux devices. It allows you to share audio inputs and outputs across multiple machines and control routing through a simple web-based UI.
+audiomesh is a lightweight, LAN-based audio distribution framework for Linux devices. It allows you to share audio inputs and outputs across multiple machines and control routing through a simple web-based UI.
 
 ## Features
 
@@ -14,7 +14,7 @@ AudioMesh is a lightweight, LAN-based audio distribution framework for Linux dev
 
 - Linux-based OS on each node.
 - Python 3.10+
-- ALSA (for audio capture/playback) or PulseAudio/Jack support.
+- ALSA (for audio capture/playback) or JACK support.
 - `poetry`
 - Web browser for accessing the UI.
 
@@ -32,6 +32,9 @@ $ poetry install
 
 # Activate the virtual environment
 $ poetry shell
+
+# Install git hooks
+$ pre-commit install
 ```
 
 ### Docker
@@ -56,7 +59,7 @@ All configuration is managed via `config.yaml` in the project root:
 # Example config.yaml
 node_name: node01
 listen_port: 5000
-backend: alsa            # or pulse, jack
+backend: alsa            # or jack
 ui_port: 8080
 nodes:
   - host: node02.local
@@ -66,14 +69,14 @@ nodes:
 ```
 
 - `node_name`: Unique identifier for this node.
-- `listen_port`: Port for audio mesh communication.
-- `backend`: Audio subsystem (`alsa`, `pulse`, `jack`).
+- `listen_port`: Port for audiomesh communication.
+- `backend`: Audio subsystem (`alsa`, `jack`).
 - `ui_port`: HTTP port for the Web UI.
 - `nodes`: List of peer nodes in the mesh.
 
 ## Usage
 
-Start AudioMesh on each device:
+Start audiomesh on each device:
 
 ```bash
 $ poetry run audiomesh --config config.yaml
@@ -96,7 +99,9 @@ Click **Apply** to establish the stream.
 
 - **Code style**: Follow PEP8.
 - **Testing**: Unit tests under `tests/`; run with `poetry run pytest`.
-- **Linting**: `flake8`.
+- **Pre-commit hooks**: Run `pre-commit install` after installing dependencies. This
+  configures `black`, `isort`, `flake8`, and `mypy` to run automatically before
+  each commit.
 
 ## Contributing
 

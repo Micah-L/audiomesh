@@ -13,8 +13,7 @@ class JackError(RuntimeError):
     """Raised when JACK interaction fails or a required tool is missing."""
 
 
-_PROCESSES: Dict[int, subprocess.Popen] = {}
-
+_PROCESSES: Dict[int, subprocess.Popen[bytes]] = {}
 
 def start_stream(peer_ip: str, source_name: str) -> int:
     """Start a JACK network stream using ``jacktrip``.
@@ -36,7 +35,12 @@ def start_stream(peer_ip: str, source_name: str) -> int:
         raise JackError("jacktrip not installed")
 
     cmd = ["jacktrip", "-C", peer_ip, "--clientname", source_name]
-    proc = subprocess.Popen(cmd)
+    try:
+        proc = subprocess.Popen(
+            cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
+    except OSError as exc:
+        raise JackError(f"failed to launch jacktrip: {exc}") from exc
     _PROCESSES[proc.pid] = proc
     return proc.pid
 
@@ -52,7 +56,7 @@ def stop_stream(pid: int) -> None:
     try:
         proc.wait(timeout=5)
     except subprocess.TimeoutExpired:
-        os.kill(pid, signal.SIGKILL)
+        os.kill(proc.pid, signal.SIGKILL)
 
 
 __all__ = ["start_stream", "stop_stream", "JackError"]
