@@ -49,6 +49,8 @@
   * `feat`, `fix`, `chore`, `docs`, `test`, `refactor`
   * e.g. `feat(audiomesh): add RTP send wrapper`
 * **Branch naming**: `feature/<short-description>`, `bugfix/<issue-number>`.
+* **Sync with main**: Before starting new work, fetch and rebase the current
+  branch onto `main` to incorporate any upstream changes.
 * **PR checks**: Must pass `poetry run pytest`, `flake8`, `mypy`, and `black --check`.
 
 ## 6. Agent-Specific Overrides
