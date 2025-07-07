@@ -1,0 +1,27 @@
+slug: docs-update              # kebab-case, immutable
+title: Documentation Update    # one-line human summary
+description: |
+  Enhance project documentation with comprehensive usage examples for CLI,
+  API endpoints, Docker Compose, and configuration settings.
+deliverable:
+  - README.md  # updated with CLI, API, UI, Docker usage
+  - docs/CLI.md
+  - docs/API.md
+  - docs/Deploy.md
+constraints:
+  - Use markdown format
+  - Include code snippets and expected outputs
+  - Keep prose concise and targeted at new contributors
+acceptance_criteria:
+  - README.md covers all `discovery`, `audio-core`, and `api` commands with examples
+  - docs/CLI.md, API.md, Deploy.md render correctly in GitHub preview
+  - No broken links or missing sections
+priority: 4
+estimate: 2h
+dependencies:
+  - audio-core-cli
+  - fastapi-server-endpoints
+  - web-ui-integration
+  - docker-compose-setup
+status: todo
+notes: ""
