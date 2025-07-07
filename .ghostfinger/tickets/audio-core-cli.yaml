@@ -1,0 +1,27 @@
+slug: audio-core-cli          # kebab-case, immutable
+title: Audio-core CLI commands  # one-line human summary
+description: |  # what & why in two sentences max
+  Add the audio-core subcommands to the CLI for launching and terminating JACK network streams.
+  Users need a straightforward interface to start (start <peer_ip> <client_name>) and stop (stop <pid>) audio sessions.
+deliverable:  # files/dirs that must exist
+  - audiomesh/cli.py  # includes audio_core group with start and stop commands
+  - tests/test_cli_audio_core.py  # unit tests mocking start_stream and stop_stream
+  - pyproject.toml  # updated with audio-core script entrypoint
+constraints:  # "don’t you dare" list
+  - Use Click for argument parsing
+  - CLI commands must call audiomesh.start_stream and audiomesh.stop_stream
+  - Catch JackError and exit with a user-friendly error message and non-zero exit code
+  - Adhere to existing style rules (black, flake8, ruff)
+  - No additional dependencies besides Click and project dev-deps
+acceptance_criteria:  # testable bullets
+  - poetry run audio-core --help exits 0 and shows start and stop commands
+  - poetry run audio-core start 127.0.0.1 foo prints a PID (mocked in tests) and exits 0
+  - poetry run audio-core stop 1234 prints confirmation on success and exits 0
+  - On JackError, audio-core start prints the error message and exits with code 1
+  - Tests in tests/test_cli_audio_core.py pass under pytest
+priority: 2  # 0-critical, 5-meh
+estimate: 1h  # human-ish guess; QA can adjust
+dependencies:  # other ticket slugs
+  - discovery-cli  # relies on CLI framework work completed
+status: todo  # todo | in-progress | blocked | done
+notes: "Ensure tests mock external processes and verify exit codes and output formatting."

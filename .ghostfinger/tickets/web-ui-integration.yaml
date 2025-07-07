@@ -1,0 +1,25 @@
+slug: web-ui-integration          # kebab-case, immutable
+title: Web UI Integration  # one-line human summary
+description: |  # what & why in two sentences max
+  Connect the static dashboard UI to the FastAPI backend using fetch and real-time updates.
+  Users should see live peer lists and be able to start/stop streams from the browser.
+deliverable:  # files/dirs that must exist
+  - ui/index.html  # updated to point to new endpoints and include WebSocket/SSE logic
+  - ui/js/app.js  # fetch calls, event handlers, UI state updates
+  - ui/assets/  # CSS and image assets for styling and images
+  - tests/test_ui_integration.js  # E2E tests in headless browser via Playwright or similar
+constraints:  # "don’t you dare" list
+  - Use vanilla JS or existing framework in project
+  - Real-time updates via SSE or WebSocket only
+  - No new UI dependencies beyond project’s standard toolchain
+acceptance_criteria:  # testable bullets
+  - On page load, peer list is fetched and rendered correctly
+  - Clicking Connect sends POST and updates UI to "Connected" state
+  - Peer removal and stream status changes propagate in real time without refresh
+  - E2E tests in tests/test_ui_integration.js pass
+priority: 3  # 0-critical, 5-meh
+estimate: 6h  # human-ish guess; QA can adjust
+dependencies:
+  - fastapi-server-endpoints
+status: todo  # todo | in-progress | blocked | done
+notes: "Ensure CORS and static file serving are configured in FastAPI. Handle error responses (e.g., display a toast notification if POST to /stream fails)."

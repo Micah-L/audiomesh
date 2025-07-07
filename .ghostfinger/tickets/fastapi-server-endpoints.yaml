@@ -1,0 +1,27 @@
+slug: fastapi-server-endpoints          # kebab-case, immutable
+title: FastAPI Server Endpoints  # one-line human summary
+description: |  # what & why in two sentences max
+  Implement HTTP endpoints in a FastAPI app to expose discovery and audio-core functionality.
+  This enables programmatic control of peers and streams via REST.
+deliverable:  # files/dirs that must exist
+  - api/app.py  # FastAPI instantiation, startup/shutdown events, and mounting StaticFiles to serve UI assets
+  - api/routes.py  # route handlers for /nodes, /streams, etc.
+  - tests/test_api_endpoints.py  # unit tests for each endpoint
+constraints:  # "don’t you dare" list
+  - Use FastAPI
+  - Listener must start on app startup and stop on shutdown
+  - Endpoints must return JSON with proper HTTP status codes
+  - No blocking calls in route handlers
+  - Delegate long-running tasks (e.g., starting streams) to background tasks or a threadpool
+acceptance_criteria:  # testable bullets
+  - GET /nodes returns 200 OK with JSON list of peers
+  - POST /nodes/{node_id}/stream returns 201 Created with PID
+  - DELETE /nodes/{node_id}/stream returns 204 No Content
+  - GET /streams returns 200 OK with active streams list
+  - Tests in tests/test_api_endpoints.py pass under pytest
+priority: 2  # 0-critical, 5-meh
+estimate: 4h  # human-ish guess; QA can adjust
+dependencies:  # other ticket slugs
+  - audio-core-cli
+status: todo  # todo | in-progress | blocked | done
+notes: "Ensure tests mock start_stream/stop_stream to avoid spawning real processes."
