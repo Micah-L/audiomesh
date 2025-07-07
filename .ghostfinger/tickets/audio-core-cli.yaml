@@ -23,5 +23,5 @@ priority: 2  # 0-critical, 5-meh
 estimate: 1h  # human-ish guess; QA can adjust
 dependencies:  # other ticket slugs
   - discovery-cli  # relies on CLI framework work completed
-status: todo  # todo | in-progress | blocked | done
+status: done  # todo | in-progress | blocked | done
 notes: "Ensure tests mock external processes and verify exit codes and output formatting."

@@ -1,0 +1,27 @@
+slug: audio-core-service
+title: Audio-core service layer (start_stream / stop_stream)
+description: >
+  Wrap jacktrip execution behind start_stream and stop_stream helpers,
+  raising JackError on failure so the CLI stays thin.
+deliverable:
+  - audiomesh/core.py                 # defines start_stream, stop_stream, JackError
+  - tests/test_audio_core_service.py
+  - docs/audio_core.md                # usage & architecture blurb
+constraints:
+  - Use `subprocess.Popen` (detach) for jacktrip; SIGTERM for stop
+  - On missing executable raise JackError("jacktrip not installed")
+  - On bad PID raise JackError("unknown stream <pid>")
+  - Return int PID from start_stream; stop_stream returns None
+  - Follow black/ruff (E,F,I) exactly; no extra deps
+acceptance_criteria:
+  - start_stream("127.0.0.1", "foo") → mocked PID int, no exceptions
+  - stop_stream(<pid>) → sends SIGTERM (mock) and returns cleanly
+  - Missing jacktrip binary triggers JackError with correct message
+  - All new tests pass under `pytest`
+priority: 1
+estimate: 3h
+dependencies:
+  - install-prereqs-script
+  - audio-core-cli
+status: todo
+notes: "Unblocks end-to-end audio sessions once jacktrip is callable."

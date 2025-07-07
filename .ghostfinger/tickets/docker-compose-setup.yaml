@@ -11,7 +11,8 @@ constraints:
   - Mount local code for live reload
   - Expose API on port 8000 and UI on port 8080
 acceptance_criteria:
-  - `docker-compose up` successfully starts all services
+  - >
+    `docker-compose up` successfully starts all services
   - Accessing http://localhost:8000/ returns the UI home page
   - Stopping compose cleans up all containers
 priority: 3

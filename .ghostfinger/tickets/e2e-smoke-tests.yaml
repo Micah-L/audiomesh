@@ -11,7 +11,8 @@ constraints:
   - Use pytest fixtures to manage process setup/teardown
   - Avoid race conditions by waiting for service readiness
 acceptance_criteria:
-  - "pytest tests/test_e2e_smoke.py" passes reliably in CI environment
+  - >
+    "pytest tests/test_e2e_smoke.py" passes reliably in CI environment
   - scripts/run_e2e.sh returns exit code 0 on success and prints a summary
 priority: 2
 estimate: 3h

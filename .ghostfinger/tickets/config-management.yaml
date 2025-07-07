@@ -12,7 +12,8 @@ constraints:
   - Defaults must match existing behavior
   - Missing required vars cause a clear startup error
 acceptance_criteria:
-  - "CONFIG_GROUP=239.0.0.1 CONFIG_PORT=60000 ..." overrides discovery group and port in CLI and API
+  - >
+    "CONFIG_GROUP=239.0.0.1 CONFIG_PORT=60000 ..." overrides discovery group and port in CLI and API
   - Invalid env var values trigger a descriptive error at startup
   - Unit tests for config parsing and defaults pass under pytest
 priority: 3

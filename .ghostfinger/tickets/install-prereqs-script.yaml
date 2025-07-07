@@ -1,0 +1,24 @@
+slug: install-prereqs-script
+title: Portable install script for JACK + jacktrip
+description: >
+  Provide a one-shot installer so devs can run the CLI without Docker.
+  Offload package installs from the Dockerfile to the host script.
+deliverable:
+  - scripts/install_prereqs.sh        # POSIX-shell script, idempotent
+  - docs/install.md                   # quick start guide
+  - Dockerfile                        # refactored to COPY and run script only for CI
+constraints:
+  - Pure bash (no Python); must run on Debian/Ubuntu and macOS Homebrew
+  - Detect package manager and install `jacktrip` plus JACK libs/headers
+  - Idempotent: second run exits 0 and prints "already installed"
+  - No new Python deps; style rules still apply
+acceptance_criteria:
+  - `./scripts/install_prereqs.sh` on supported host exits 0 and installs binaries
+  - Re-running the script exits 0 without reinstalling
+  - `docker build .` succeeds with trimmed Dockerfile
+  - README snippet in docs matches script usage
+priority: 0
+estimate: 1h
+dependencies: []
+status: todo
+notes: "Blocks any runtime tickets that invoke jacktrip."
