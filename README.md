@@ -15,12 +15,12 @@ AudioMesh is a lightweight, LAN-based audio distribution framework for Linux dev
 - Linux-based OS on each node.
 - Python 3.10+
 - ALSA (for audio capture/playback) or PulseAudio/Jack support.
-- `pip`
+- `poetry`
 - Web browser for accessing the UI.
 
 ## Installation
 
-### Python version
+### Setup with Poetry
 
 ```bash
 # Clone the repo
@@ -28,10 +28,10 @@ $ git clone https://github.com/your-org/audiomesh.git
 $ cd audiomesh
 
 # Install dependencies
-$ pip install -r requirements.txt
+$ poetry install
 
-# Optional: install as package
-$ pip install .
+# Activate the virtual environment
+$ poetry shell
 ```
 
 ## Configuration
@@ -62,7 +62,7 @@ nodes:
 Start AudioMesh on each device:
 
 ```bash
-$ audiomesh --config config.yaml
+$ poetry run audiomesh --config config.yaml
 ```
 
 Open your browser to `http://<node_host>:<ui_port>`.
@@ -81,7 +81,7 @@ Click **Apply** to establish the stream.
 ## Development
 
 - **Code style**: Follow PEP8.
-- **Testing**: Unit tests under `tests/`; use `pytest`.
+- **Testing**: Unit tests under `tests/`; run with `poetry run pytest`.
 - **Linting**: `flake8`.
 
 ## Contributing
