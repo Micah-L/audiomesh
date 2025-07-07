@@ -50,7 +50,6 @@ def test_stop_stream_terminates_process(monkeypatch):
 
     assert events == ['terminate', 'wait']
 
-
 def test_stop_stream_kills_on_timeout(monkeypatch):
     events = []
 

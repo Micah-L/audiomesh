@@ -37,6 +37,20 @@ $ poetry shell
 $ pre-commit install
 ```
 
+### Docker
+
+Build a runtime image with JACK and ``jacktrip`` preinstalled:
+
+```bash
+$ docker build -t audiomesh-client -f docker/Dockerfile .
+```
+
+Run the container passing your configuration file:
+
+```bash
+$ docker run --net=host -v $(pwd)/config.yaml:/app/config.yaml audiomesh-client
+```
+
 ## Configuration
 
 All configuration is managed via `config.yaml` in the project root:
