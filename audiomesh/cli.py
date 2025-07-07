@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import os
 import signal
 import sys
@@ -15,6 +16,38 @@ import click
 from tabulate import tabulate
 
 from discovery.listener import Listener
+
+from . import JackError, start_stream, stop_stream
+
+
+def _clean_stale_pid(pid_path: Path) -> None:
+    if not pid_path.exists():
+        return
+    try:
+        existing_pid = int(pid_path.read_text())
+        os.kill(existing_pid, 0)
+        click.echo("discovery already running", err=True)
+        sys.exit(1)
+    except (ProcessLookupError, ValueError, PermissionError):
+        pid_path.unlink(missing_ok=True)
+
+
+def _fork_daemon(pid_path: Path) -> bool:
+    try:
+        pid = os.fork()
+    except OSError as exc:  # pragma: no cover - os.fork error
+        click.echo(f"fork failed: {exc}", err=True)
+        sys.exit(1)
+    if pid:
+        pid_path.write_text(str(pid))
+        return True
+    os.setsid()
+    with open(os.devnull, "rb", buffering=0) as devnull:
+        os.dup2(devnull.fileno(), sys.stdin.fileno())
+    with open(os.devnull, "ab", buffering=0) as devnull:
+        os.dup2(devnull.fileno(), sys.stdout.fileno())
+        os.dup2(devnull.fileno(), sys.stderr.fileno())
+    return False
 
 
 @click.group()
@@ -33,25 +66,35 @@ def discovery() -> None:
     help="Output format",
 )
 @click.option("--daemon/--no-daemon", default=False, help="Run backgrounded")
-@click.option("--pid-file", default="~/.audiomesh/discovery.pid", help="PID file path")
+@click.option(
+    "--pid-file",
+    type=click.Path(path_type=str),
+    default="~/.audiomesh/discovery.pid",
+    help="PID file path",
+)
+@click.option("--verbose", is_flag=True, help="Enable debug output")
 def start(
     interface: str,
     timeout: float,
     outfmt: str,
     daemon: bool,
-    pid_file: str,
+    pid_file: Path,
+    verbose: bool,
 ) -> None:
     """Start peer discovery."""
 
-    pid_path = Path(os.path.expanduser(pid_file))
+    pid_path = Path(os.path.expanduser(str(pid_file)))
     os.makedirs(pid_path.parent, exist_ok=True)
 
-    if daemon:
-        pid = os.fork()
-        if pid:
-            pid_path.write_text(str(pid))
-            return
-        os.setsid()
+    if verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
+    _clean_stale_pid(pid_path)
+
+    if daemon and _fork_daemon(pid_path):
+        return
 
     try:
         asyncio.run(_serve(interface, timeout, outfmt, pid_path, daemon))
@@ -141,11 +184,16 @@ async def _serve(
 
 
 @discovery.command()
-@click.option("--pid-file", default="~/.audiomesh/discovery.pid", help="PID file path")
-def stop(pid_file: str) -> None:
+@click.option(
+    "--pid-file",
+    type=click.Path(path_type=str),
+    default="~/.audiomesh/discovery.pid",
+    help="PID file path",
+)
+def stop(pid_file: Path) -> None:
     """Stop backgrounded discovery."""
 
-    pid_path = Path(os.path.expanduser(pid_file))
+    pid_path = Path(os.path.expanduser(str(pid_file)))
     if not pid_path.exists():
         click.echo("discovery not running", err=True)
         sys.exit(1)
@@ -166,12 +214,34 @@ def stop(pid_file: str) -> None:
     pid_path.unlink(missing_ok=True)
 
 
-def audio_core(args: list[str] | None = None) -> None:  # pragma: no cover
-    """Placeholder audio core service."""
-    msg = "audio core service"
-    if args is not None:
-        msg = f"audio core service {args}"
-    print(msg)
+@click.group()
+def audio_core() -> None:
+    """Manage JACK streams via jacktrip."""
+
+
+@audio_core.command(name="start")
+@click.argument("peer_ip")
+@click.argument("client_name")
+def start_session(peer_ip: str, client_name: str) -> None:
+    """Launch a jacktrip session."""
+    try:
+        pid = start_stream(peer_ip, client_name)
+    except JackError as exc:
+        click.echo(str(exc), err=True)
+        sys.exit(1)
+    click.echo(str(pid))
+
+
+@audio_core.command(name="stop")
+@click.argument("pid", type=int)
+def stop_session(pid: int) -> None:
+    """Terminate a jacktrip session."""
+    try:
+        stop_stream(pid)
+    except JackError as exc:
+        click.echo(str(exc), err=True)
+        sys.exit(1)
+    click.echo(f"stopped {pid}")
 
 
 def api(args: list[str] | None = None) -> None:  # pragma: no cover
