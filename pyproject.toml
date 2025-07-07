@@ -9,6 +9,11 @@ packages = [{include = "audiomesh"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 
+[tool.poetry.scripts]
+discovery = "audiomesh.cli:discovery"
+audio-core = "audiomesh.cli:audio_core"
+api = "audiomesh.cli:api"
+
 [build-system]
 requires = ["poetry-core>=1.5.0"]
 build-backend = "poetry.core.masonry.api"

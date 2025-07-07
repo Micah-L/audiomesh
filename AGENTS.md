@@ -3,7 +3,7 @@
 ## 1. Project Layout
 
 * `discovery/`: Peer discovery module (Python package)
-* `audiomesh/`: PulseAudio & JACK wrappers (Python package)
+* `audiomesh/`: JACK wrappers (Python package)
 * `api/`: FastAPI server handling JSON endpoints
 * `ui/`: Static assets (HTML/JS) served by API or separate web server
 * `tests/`: Unit and integration tests (pytest)
@@ -23,8 +23,8 @@
   ```bash
   poetry run pytest --maxfail=1 --disable-warnings --cov=audiomesh --cov-report=term-missing
   ```
-* **Coverage requirement**: 90%+ for `audiomesh/` and `api/` packages.
-* **Fixtures & Mocks**: Use pytest fixtures for PulseAudio/Jack backends; mock external calls.
+* **Coverage requirement**: 90%+ for `audiomesh/`, `api/`, and `discovery/` packages.
+* **Fixtures & Mocks**: Use pytest fixtures for JACK backends; mock external calls.
 
 ## 4. Build & Run
 
@@ -36,9 +36,9 @@
 * **Start services (local)**:
 
   ```bash
-  poetry run audiomesh discovery --config config.yaml &
-  poetry run audiomesh audio-core --config config.yaml &
-  poetry run audiomesh api --reload --host 0.0.0.0 --port 8080 &
+  poetry run discovery --config config.yaml &
+  poetry run audio-core --config config.yaml &
+  poetry run api --reload --host 0.0.0.0 --port 8080 &
   ```
 * **Web UI**: Open `http://localhost:8080/` in browser.
 
