@@ -15,8 +15,8 @@ constraints:
   - Conform to black/ruff rules
 acceptance_criteria:
   - start_discovery() can be invoked from tests and returns a live handle/PID
-  - stop_discovery(handle) terminates the service within 2 s
-  - Received multicast packets match JSON schema { "host": str, "port": int }
+  - stop_discovery(handle) terminates the service within 2s
+  - 'Received multicast packets match JSON schema { "host": str, "port": int }'
   - All tests green under `pytest`
 priority: 2
 estimate: 4h
