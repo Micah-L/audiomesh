@@ -1,4 +1,4 @@
-AudioMesh
+# AudioMesh
 
 AudioMesh is a lightweight, LAN-based audio distribution framework for Linux devices. It allows you to share audio inputs and outputs across multiple machines and control routing through a simple web-based UI.
 
@@ -13,9 +13,9 @@ AudioMesh is a lightweight, LAN-based audio distribution framework for Linux dev
 ## Requirements
 
 - Linux-based OS on each node.
-- Python 3.8+ or C++17 toolchain (depending on chosen implementation).
+- Python 3.10+
 - ALSA (for audio capture/playback) or PulseAudio/Jack support.
-- `pip` (if using the Python package) or `cmake` and `make`.
+- `pip`
 - Web browser for accessing the UI.
 
 ## Installation
@@ -32,18 +32,6 @@ $ pip install -r requirements.txt
 
 # Optional: install as package
 $ pip install .
-```
-
-### C++ version
-
-```bash
-# Clone and build
-$ git clone https://github.com/your-org/audiomesh.git
-$ cd audiomesh
-$ mkdir build && cd build
-$ cmake ..
-$ make
-$ sudo make install
 ```
 
 ## Configuration
@@ -92,9 +80,9 @@ Click **Apply** to establish the stream.
 
 ## Development
 
-- **Code style**: Follow PEP8 (Python) or Google C++ style guide.
-- **Testing**: Unit tests under `tests/`; use `pytest` (Python) or `ctest` (C++).
-- **Linting**: `flake8` and `clang-format`.
+- **Code style**: Follow PEP8.
+- **Testing**: Unit tests under `tests/`; use `pytest`.
+- **Linting**: `flake8`.
 
 ## Contributing
 
