@@ -58,4 +58,3 @@
 
 * **Nested Agents.md**: A file in subpackages (e.g., `audiomesh/Agents.md`) overrides root settings for that module.
 * **Inline prompts**: Any in-code `# codex:` comments take precedence over Agents.md.
-

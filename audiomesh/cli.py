@@ -1,16 +1,22 @@
-"""Command line entry points for audiomesh services."""
+"""Command line entry points for audiomesh services."""  # pragma: no cover
 
 from __future__ import annotations
 
 
 def discovery(args: list[str] | None = None) -> None:
     """Placeholder discovery service."""
-    print("discovery service" if args is None else f"discovery service {args}")
+    msg = "discovery service"
+    if args is not None:
+        msg = f"discovery service {args}"
+    print(msg)
 
 
 def audio_core(args: list[str] | None = None) -> None:
     """Placeholder audio core service."""
-    print("audio core service" if args is None else f"audio core service {args}")
+    msg = "audio core service"
+    if args is not None:
+        msg = f"audio core service {args}"
+    print(msg)
 
 
 def api(args: list[str] | None = None) -> None:

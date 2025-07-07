@@ -46,7 +46,8 @@ def start_stream(peer_ip: str, source_name: str) -> int:
 
 
 def stop_stream(pid: int) -> None:
-    """Stop a JACK network stream previously started with :func:`start_stream`."""
+    """Stop a JACK network stream previously started with
+    :func:`start_stream`."""
 
     proc = _PROCESSES.pop(pid, None)
     if proc is None:
