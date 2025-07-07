@@ -15,6 +15,7 @@ class JackError(RuntimeError):
 
 _PROCESSES: Dict[int, subprocess.Popen[bytes]] = {}
 
+
 def start_stream(peer_ip: str, source_name: str) -> int:
     """Start a JACK network stream using ``jacktrip``.
 

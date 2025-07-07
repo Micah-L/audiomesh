@@ -1,7 +1,7 @@
 FROM python:3.10-slim
 
 # Install JACK server and jacktrip for network audio streaming
-RUN apt-get update \ 
+RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         jackd2 \
         jacktrip \

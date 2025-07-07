@@ -1,10 +1,13 @@
 [tool.poetry]
 name = "audiomesh"
-version = "0.1.0"
+version = "0.2.0"
 description = "Lightweight LAN-based audio distribution framework"
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
-packages = [{include = "audiomesh"}]
+packages = [
+    {include = "audiomesh"},
+    {include = "discovery"},
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
