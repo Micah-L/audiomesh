@@ -1,22 +1,22 @@
 slug: e2e-smoke-tests          # kebab-case, immutable
 title: End-to-End Smoke Tests  # one-line human summary
-description: |
+description: |                # what & why in two sentences max
   Create a smoke test suite that launches a dummy announcer and the API server,
   then exercises HTTP endpoints to verify core workflows end-to-end.
-deliverable:
+deliverable:                  # files/dirs that must exist
   - tests/test_e2e_smoke.py
   - scripts/run_e2e.sh
-constraints:
+constraints:                  # "don't you dare" list
   - Tests must be self-contained (no external network)
   - Use pytest fixtures to manage process setup/teardown
   - Avoid race conditions by waiting for service readiness
-acceptance_criteria:
+acceptance_criteria:          # testable bullets
   - >
     "pytest tests/test_e2e_smoke.py" passes reliably in CI environment
   - scripts/run_e2e.sh returns exit code 0 on success and prints a summary
-priority: 2
-estimate: 3h
+priority: 2                   # 0-critical, 5-meh
+estimate: 3h                  # human-ish guess; QA can adjust
 dependencies:
   - fastapi-server-endpoints
-status: todo
+status: todo                   # todo | in-progress | blocked | done
 notes: ""
