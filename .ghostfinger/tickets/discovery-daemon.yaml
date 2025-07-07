@@ -1,0 +1,27 @@
+slug: discovery-daemon
+title: LAN discovery background service
+description: >
+  Broadcast and listen for peer presence via UDP multicast, exposing
+  start_discovery / stop_discovery utilities.
+deliverable:
+  - discovery/daemon.py               # asyncio UDP service
+  - tests/test_discovery_daemon.py
+  - docs/discovery_daemon.md
+constraints:
+  - Asyncio-based, multicast to 224.0.0.1:10000 by default
+  - start_discovery returns PID (or Task id) and backgrounds cleanly
+  - Gracefully handles network errors; JackError-style DiscoveryError on failure
+  - No extra runtime deps beyond stdlib
+  - Conform to black/ruff rules
+acceptance_criteria:
+  - start_discovery() can be invoked from tests and returns a live handle/PID
+  - stop_discovery(handle) terminates the service within 2 s
+  - Received multicast packets match JSON schema { "host": str, "port": int }
+  - All tests green under `pytest`
+priority: 2
+estimate: 4h
+dependencies:
+  - discovery-cli
+  - install-prereqs-script
+status: todo
+notes: "Lays the groundwork for automatic peer mapping."
