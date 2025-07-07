@@ -1,11 +1,7 @@
 FROM python:3.10-slim
 
-# Install JACK server and jacktrip for network audio streaming
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        jackd2 \
-        jacktrip \
-    && rm -rf /var/lib/apt/lists/*
+COPY scripts/install_prereqs.sh /tmp/install_prereqs.sh
+RUN /tmp/install_prereqs.sh && rm /tmp/install_prereqs.sh
 
 WORKDIR /app
 COPY . /app

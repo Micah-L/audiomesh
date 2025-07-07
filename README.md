@@ -27,6 +27,7 @@ audiomesh is a lightweight, LAN-based audio distribution framework for Linux dev
 $ git clone https://github.com/your-org/audiomesh.git
 $ cd audiomesh
 
+
 # Install dependencies
 $ poetry install
 
@@ -36,6 +37,16 @@ $ poetry shell
 # Install git hooks
 $ pre-commit install
 ```
+
+### Install JACK & jacktrip
+
+Run the helper script to install audio prerequisites:
+
+```bash
+$ ./scripts/install_prereqs.sh
+```
+
+The script is idempotent and works on Ubuntu/Debian or macOS with Homebrew.
 
 ### Docker
 
