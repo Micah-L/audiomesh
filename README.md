@@ -76,7 +76,19 @@ nodes:
 
 ## Usage
 
-Start audiomesh on each device:
+Start peer discovery on each device:
+
+```bash
+$ poetry run discovery start
+```
+
+Stop the background discovery daemon:
+
+```bash
+$ poetry run discovery stop
+```
+
+Start the audio mesh core on each device:
 
 ```bash
 $ poetry run audiomesh --config config.yaml
