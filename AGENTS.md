@@ -51,7 +51,10 @@
 * **Branch naming**: `feature/<short-description>`, `bugfix/<issue-number>`.
 * **Sync with main**: Before starting new work, fetch and rebase the current
   branch onto `main` to incorporate any upstream changes.
-* **PR checks**: Must pass `poetry run pytest`, `flake8`, `mypy`, and `black --check`.
+* **Pre-commit hooks**: Run `poetry run pre-commit install` after installing
+  dependencies.
+* **PR checks**: Run `pre-commit run --all-files` and `poetry run pytest`. The
+  pre-commit configuration runs `black`, `isort`, `flake8`, and `mypy`.
 
 ## 6. Agent-Specific Overrides
 
