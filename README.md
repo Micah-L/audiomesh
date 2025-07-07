@@ -32,6 +32,9 @@ $ poetry install
 
 # Activate the virtual environment
 $ poetry shell
+
+# Install git hooks
+$ poetry run pre-commit install
 ```
 
 ## Configuration
@@ -82,7 +85,9 @@ Click **Apply** to establish the stream.
 
 - **Code style**: Follow PEP8.
 - **Testing**: Unit tests under `tests/`; run with `poetry run pytest`.
-- **Linting**: `flake8`.
+- **Pre-commit hooks**: Run `pre-commit install` after installing dependencies. This
+  configures `black`, `isort`, `flake8`, and `mypy` to run automatically before
+  each commit.
 
 ## Contributing
 
