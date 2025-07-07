@@ -20,6 +20,8 @@ black = "*"
 isort = "*"
 flake8 = "*"
 mypy = "*"
+pytest = "^8.4.1"
+pytest-cov = "^6.2.1"
 
 
 [build-system]

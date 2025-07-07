@@ -99,4 +99,3 @@ Click **Apply** to establish the stream.
 ## License
 
 MIT License. See `LICENSE` for details.
-
