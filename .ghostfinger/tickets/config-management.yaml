@@ -1,24 +1,24 @@
 slug: config-management          # kebab-case, immutable
 title: Configuration Management  # one-line human summary
-description: |
+description: |                # what & why in two sentences max
   Centralize app settings in a configuration module using environment variables.
   Ensures consistent defaults, validation, and easy overrides for CLI, API, and UI.
-deliverable:
+deliverable:                  # files/dirs that must exist
   - audiomesh/config.py
   - api/settings.py
   - Updates to cli.py and api/app.py to load settings from config module
-constraints:
+constraints:                  # "don't you dare" list
   - Use Pydantic BaseSettings for env var parsing and validation
   - Defaults must match existing behavior
   - Missing required vars cause a clear startup error
-acceptance_criteria:
+acceptance_criteria:          # testable bullets
   - >
     "CONFIG_GROUP=239.0.0.1 CONFIG_PORT=60000 ..." overrides discovery group and port in CLI and API
   - Invalid env var values trigger a descriptive error at startup
   - Unit tests for config parsing and defaults pass under pytest
-priority: 3
-estimate: 2h
+priority: 3                   # 0-critical, 5-meh
+estimate: 2h                  # human-ish guess; QA can adjust
 dependencies:
   - fastapi-server-endpoints
-status: todo
+status: todo                   # todo | in-progress | blocked | done
 notes: ""

@@ -1,0 +1,19 @@
+slug: api-health-check         # kebab-case, immutable
+title: Health check endpoint   # one-line human summary
+description: |                # what & why in two sentences max
+  Add a `/health` endpoint to the FastAPI application for readiness and liveness probes.
+  Enables Kubernetes or load balancers to verify service health.
+deliverable:                  # files/dirs that must exist
+  - api/routes.py (includes GET `/health` route)
+constraints:                  # "don't you dare" list
+  - Must return HTTP 200 OK with JSON `{ "status": "ok" }`
+  - No external dependencies or blocking logic
+acceptance_criteria:          # testable bullets
+  - `GET /health` returns 200 with `{"status":"ok"}` payload
+  - Tests in `tests/test_api_health.py` validate the route response
+priority: 3                   # 0-critical, 5-meh
+estimate: 30m                 # human-ish guess; QA can adjust
+dependencies:
+  - fastapi-server-endpoints
+status: todo                  # todo | in-progress | blocked | done
+notes: ""

@@ -1,0 +1,17 @@
+slug: add-license              # kebab-case, immutable
+title: Add project license     # one-line human summary
+description: |                # what & why in two sentences max
+  Choose and add an open-source license file (e.g., MIT) to clarify usage and contributions.
+  Ensures legal clarity for users and contributors.
+deliverable:                  # files/dirs that must exist
+  - LICENSE (in repository root)
+constraints:                  # "don't you dare" list
+  - Use the MIT license template
+acceptance_criteria:          # testable bullets
+  - `LICENSE` file present with standard MIT text
+  - README references the license by name
+priority: 5                   # 0-critical, 5-meh
+estimate: 15m                 # human-ish guess; QA can adjust
+dependencies: []              # other ticket slugs
+status: todo                  # todo | in-progress | blocked | done
+notes: ""

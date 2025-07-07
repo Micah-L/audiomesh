@@ -59,4 +59,3 @@ case "$PKG_MGR" in
         brew_install
         ;;
 esac
-

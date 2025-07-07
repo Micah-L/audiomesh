@@ -1,24 +1,24 @@
 slug: docker-compose-setup     # kebab-case, immutable
 title: Docker Compose Setup   # one-line human summary
-description: |
+description: |                # what & why in two sentences max
   Provide a docker-compose configuration for local development,
   orchestrating the API, UI, and an optional dummy announcer service.
-deliverable:
+deliverable:                  # files/dirs that must exist
   - docker-compose.yml
   - Dockerfile (adjusted if necessary for multi-service)
-constraints:
+constraints:                  # "don't you dare" list
   - Use `python:3.10-slim` for service images
   - Mount local code for live reload
   - Expose API on port 8000 and UI on port 8080
-acceptance_criteria:
+acceptance_criteria:          # testable bullets
   - >
     `docker-compose up` successfully starts all services
   - Accessing http://localhost:8000/ returns the UI home page
   - Stopping compose cleans up all containers
-priority: 3
-estimate: 2h
+priority: 3                   # 0-critical, 5-meh
+estimate: 2h                  # human-ish guess; QA can adjust
 dependencies:
   - fastapi-server-endpoints
   - web-ui-integration
-status: todo
+status: todo                   # todo | in-progress | blocked | done
 notes: ""
