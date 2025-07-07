@@ -1,0 +1,22 @@
+slug: ci-cd-pipeline          # kebab-case, immutable
+title: CI/CD Pipeline Setup  # one-line human summary
+description: |  # what & why in two sentences max
+  Configure a GitHub Actions workflow to run lint, type checks, and tests on every push.
+  This automates quality gates and ensures code health before merges.
+deliverable:  # files/dirs that must exist
+  - .github/workflows/ci.yml  # CI definition file
+constraints:  # "don’t you dare" list
+  - Must include steps for flake8, mypy, black check (--check), pytest
+  - Pipeline should run on pushes and PRs to main branch
+acceptance_criteria:  # testable bullets
+  - Workflow triggers on push and pull_request events
+  - flake8 step passes with zero errors or fails pipeline
+  - mypy step passes with zero type issues
+  - black --check . passes or fails pipeline
+  - pytest --maxfail=1 --disable-warnings -q passes all tests
+priority: 2  # 0-critical, 5-meh
+estimate: 2h  # human-ish guess; QA can adjust
+dependencies:
+  - fastapi-server-endpoints
+status: todo  # todo | in-progress | blocked | done
+notes: "Include cache of Poetry dependencies to speed up builds."
