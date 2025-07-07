@@ -1,6 +1,6 @@
-# AudioMesh
+# audiomesh
 
-AudioMesh is a lightweight, LAN-based audio distribution framework for Linux devices. It allows you to share audio inputs and outputs across multiple machines and control routing through a simple web-based UI.
+audiomesh is a lightweight, LAN-based audio distribution framework for Linux devices. It allows you to share audio inputs and outputs across multiple machines and control routing through a simple web-based UI.
 
 ## Features
 
@@ -52,14 +52,14 @@ nodes:
 ```
 
 - `node_name`: Unique identifier for this node.
-- `listen_port`: Port for audio mesh communication.
+- `listen_port`: Port for audiomesh communication.
 - `backend`: Audio subsystem (`alsa`, `pulse`, `jack`).
 - `ui_port`: HTTP port for the Web UI.
 - `nodes`: List of peer nodes in the mesh.
 
 ## Usage
 
-Start AudioMesh on each device:
+Start audiomesh on each device:
 
 ```bash
 $ poetry run audiomesh --config config.yaml
