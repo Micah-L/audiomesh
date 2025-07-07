@@ -6,6 +6,7 @@ description: |  # what & why in two sentences max
 deliverable:  # files/dirs that must exist
   - ui/index.html  # updated to point to new endpoints and include WebSocket/SSE logic
   - ui/js/app.js  # fetch calls, event handlers, UI state updates
+  - ui/assets/  # CSS and image assets for styling and images
   - tests/test_ui_integration.js  # E2E tests in headless browser via Playwright or similar
 constraints:  # "don’t you dare" list
   - Use vanilla JS or existing framework in project
@@ -21,4 +22,4 @@ estimate: 6h  # human-ish guess; QA can adjust
 dependencies:
   - fastapi-server-endpoints
 status: todo  # todo | in-progress | blocked | done
-notes: "Ensure CORS and static file serving are configured in FastAPI."
+notes: "Ensure CORS and static file serving are configured in FastAPI. Handle error responses (e.g., display a toast notification if POST to /stream fails)."

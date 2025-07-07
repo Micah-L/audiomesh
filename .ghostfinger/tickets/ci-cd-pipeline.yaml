@@ -14,6 +14,7 @@ acceptance_criteria:  # testable bullets
   - mypy step passes with zero type issues
   - black --check . passes or fails pipeline
   - pytest --maxfail=1 --disable-warnings -q passes all tests
+  - pytest --cov --cov-report=xml generates a coverage report
 priority: 2  # 0-critical, 5-meh
 estimate: 2h  # human-ish guess; QA can adjust
 dependencies:
