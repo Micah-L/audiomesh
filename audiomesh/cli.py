@@ -9,15 +9,23 @@ import os
 import signal
 import sys
 import time
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable, Dict
+from typing import Any
 
 import click
+import uvicorn  # type: ignore[import-not-found]
 from tabulate import tabulate
 
 from discovery.listener import Listener
 
 from . import JackError, start_stream, stop_stream
+
+try:
+    from .config import API_HOST, API_PORT  # type: ignore[import-not-found]
+except Exception:  # pragma: no cover - optional config
+    API_HOST = "127.0.0.1"
+    API_PORT = 8080
 
 
 def _clean_stale_pid(pid_path: Path) -> None:
@@ -105,7 +113,7 @@ def start(
         sys.exit(1)
 
 
-def _format_table(peers: Dict[str, Dict[str, Any]]) -> str:
+def _format_table(peers: dict[str, dict[str, Any]]) -> str:
     rows = []
     now = time.time()
     for nid, data in peers.items():
@@ -116,7 +124,7 @@ def _format_table(peers: Dict[str, Dict[str, Any]]) -> str:
 
 
 def _announcement_handler(
-    peers: Dict[str, Dict[str, Any]], outfmt: str
+    peers: dict[str, dict[str, Any]], outfmt: str
 ) -> Callable[[bytes, str, int, int], None]:
     def handler(node_id: bytes, ip: str, port: int, ts: int) -> None:
         nid = node_id.hex()
@@ -140,7 +148,7 @@ def _announcement_handler(
 
 
 def _remove_handler(
-    peers: Dict[str, Dict[str, Any]], outfmt: str
+    peers: dict[str, dict[str, Any]], outfmt: str
 ) -> Callable[[bytes], None]:
     def handler(node_id: bytes) -> None:
         nid = node_id.hex()
@@ -160,7 +168,7 @@ async def _serve(
     pid_path: Path,
     daemon: bool,
 ) -> None:
-    peers: Dict[str, Dict[str, Any]] = {}
+    peers: dict[str, dict[str, Any]] = {}
     listener = Listener(
         _announcement_handler(peers, outfmt),
         interface_ip=interface,
@@ -244,6 +252,24 @@ def stop_session(pid: int) -> None:
     click.echo(f"stopped {pid}")
 
 
-def api(args: list[str] | None = None) -> None:  # pragma: no cover
-    """Placeholder API service."""
-    print("api service" if args is None else f"api service {args}")
+@click.group()
+def cli() -> None:
+    """Root command group."""
+
+
+@cli.command()
+@click.option("--host", default=API_HOST, show_default=True, help="Bind address")
+@click.option("--port", default=API_PORT, type=int, show_default=True, help="Bind port")
+@click.option("--reload", is_flag=True, help="Enable auto-reload")
+def api(host: str, port: int, reload: bool) -> None:  # pragma: no cover - CLI
+    """Start the FastAPI server."""
+    logging.basicConfig(level=logging.INFO)
+    logging.info("Starting API on %s:%d", host, port)
+    try:
+        uvicorn.run("audiomesh.api:app", host=host, port=port, reload=reload)
+    except KeyboardInterrupt:
+        logging.info("API shutdown requested")
+
+
+cli.add_command(discovery)
+cli.add_command(audio_core)
