@@ -105,6 +105,12 @@ Start the audio mesh core on each device:
 $ poetry run audiomesh --config config.yaml
 ```
 
+Start the API server for the dashboard:
+
+```bash
+$ poetry run audiomesh api
+```
+
 Open your browser to `http://<node_host>:<ui_port>`.
 
 In the dashboard, select source node and device (e.g., microphone, system output).
