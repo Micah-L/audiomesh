@@ -11,12 +11,12 @@ constraints:                  # "don't you dare" list
   - Must call `uvicorn.run()` with configurable host/port
   - Should respect config from `audiomesh/config.py`
 acceptance_criteria:          # testable bullets
-  - `poetry run audiomesh api --help` exits 0 and shows `--host` and `--port` options
-  - Running `poetry run audiomesh api` starts the server on default host/port without error
-  - Flags `--host 0.0.0.0 --port 8000` override defaults
+  - "`poetry run audiomesh api --help` exits 0 and shows `--host` and `--port` options"
+  - "Running `poetry run audiomesh api` starts the server on default host/port without error"
+  - "Flags `--host 0.0.0.0 --port 8000` override defaults"
 priority: 2                   # 0-critical, 5-meh
 estimate: 1h                  # human-ish guess; QA can adjust
 dependencies:
   - fastapi-server-endpoints
-status: todo                   # todo | in-progress | blocked | done
+status: done                   # todo | in-progress | blocked | done
 notes: "Ensure proper exit on keyboard interrupt and log startup info."
