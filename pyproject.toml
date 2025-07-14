@@ -13,7 +13,7 @@ packages = [
 python = "^3.10"
 click = "^8.1"
 tabulate = "^0.9"
-uvicorn = "^0.30"
+uvicorn = "^0.35"
 fastapi = "^0.111"
 
 [tool.poetry.scripts]
